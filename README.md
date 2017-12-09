@@ -1,1 +1,1 @@
-<b1> Hello! <b1>
+This is a Test plugin lol
