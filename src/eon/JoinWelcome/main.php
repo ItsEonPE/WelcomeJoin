@@ -11,7 +11,7 @@ use pocketmine\utils\TextFormat as C;
 
 use eon\JoinWelcome\main;
 
-class EconomyAirport extends PluginBase  implements Listener{
+class JoinWelcome extends PluginBase  implements Listener{
 
 public $prefix = C::GRAY."[".C::GOLD."JoinWelcome".C::GRAY."]";
          //[JoinWelcome]
