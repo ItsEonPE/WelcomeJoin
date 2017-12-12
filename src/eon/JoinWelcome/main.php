@@ -9,7 +9,9 @@ use picketmine\Player;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\utils\TextFormat as C;
 
-class JoinWelcome extends PluginBase  implements Listener{
+use eon\JoinWelcome\main;
+
+class EconomyAirport extends PluginBase  implements Listener{
 
 public $prefix = C::GRAY."[".C::GOLD."JoinWelcome".C::GRAY."]";
          //[JoinWelcome]
