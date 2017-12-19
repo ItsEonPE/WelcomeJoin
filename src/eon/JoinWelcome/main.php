@@ -3,7 +3,9 @@ namespace WelcomeJoin;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\plugin\PluginBase;
+
 class Main extends PluginBase implements Listener {
+    
     public function onEnable() {
         $this->getServer()->getPluginManager()->registerEvents($this,$this);
         if(!file_exists($this->getDataFolder())) {
