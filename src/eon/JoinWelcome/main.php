@@ -1,54 +1,23 @@
 <?php
-
-namespace eon;
-
-use pocketmine\plugin\PluginBase;
+namespace WelcomeJoin;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
-use picketmine\Player;
-use pocketmine\event\player\PlayerQuitEvent;
-use pocketmine\utils\TextFormat as C;
-
-use eon\JoinWelcome\main;
-
-class JoinWelcome extends PluginBase implements Listener{
-
-public $prefix = C::GRAY."[".C::GOLD."JoinWelcome".C::GRAY."]";
-         //[JoinWelcome]
-
-public function onEnable(){
-
-          $this->getServer()->getPluginManager()->registerEvents($this, $this);
-          $this->getlogger()->Info($this->prefix . C::RED . "Is Active");
-         
-          }
-
-public function onDisable(){
-
-          $this->getLogger()->Info($this->prefix . C::BLUE . " Is Disabled");
-          
-          }
-
-public function onJoin(PlayerJoinEvent $event){
-
-            $player = $event->getPlayer();
-            
-            if ($player->isOp()){
-                      $event->setJoinMessage(C::GRAY . "[". C::DARK_RED . "-" . C::GRAY . "]" .C::DARK_GRAY . C::BOLD . " » " .C::RESET . C::GREEN . $player->getName() . C::GRAY ." joined the game");
-                            } else {
-                              $event->setJoinMessage(C::GRAY . "[". C::DARK_RED . "-" . C::GRAY . "]" .C::DARK_GRAY . C::BOLD . " » " .C::RESET . C::GREEN . $player->getName() . C::GRAY ." joined the game");
-                              }
-                            }
-                             
-public function onQuit(PlayerQuitEvent $event){
-
-              $player = $event->getPlayer();
-              
-              if ($player->isOp()){
-                     $event->setQuitMessage(C::GRAY . "[". C::DARK_RED . "-" . C::GRAY . "]" .C::DARK_GRAY . C::BOLD . " » " .C::RESET . C::GREEN . $player->getName() . C::GRAY ." has left the game");
-                       }else{
-                           $event->setQuitMessage(C::GRAY . "[". C::DARK_RED . "-" . C::GRAY . "]" .C::DARK_GRAY . C::BOLD . " » " .C::RESET . C::GREEN . $player->getName() . C::GRAY ." has left the game");
-                           }
-                         }
-
-}  
+use pocketmine\plugin\PluginBase;
+class Main extends PluginBase implements Listener {
+    public function onEnable() {
+        $this->getServer()->getPluginManager()->registerEvents($this,$this);
+        if(!file_exists($this->getDataFolder())) {
+            @mkdir($this->getDataFolder());
+            $this->getConfig()->set("welcome-message", "Welcome @player on my server...{LINE}- plugin WelcomeJoin by MarcusJM // ItsEon");
+            $this->getConfig()->save();
+        }
+    }
+    public function onJoin(PlayerJoinEvent $event) {
+        $player = $event->getPlayer();
+        $event->setJoinMessage("");
+        $msg = $this->getConfig()->get("welcome-message");
+        $msg = str_replace("{LINE}", "\n", $msg);
+        $msg = str_replace("@player", $player->getName(), $msg);
+        $player->sendMessage($msg);
+    }
+}
